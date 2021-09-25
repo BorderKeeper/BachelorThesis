@@ -1,0 +1,3 @@
+[submodule "HoughTransform"]
+	path = HoughTransform
+	url = https://github.com/p-kostic/ShapeDetection-Amsterdammetje.git

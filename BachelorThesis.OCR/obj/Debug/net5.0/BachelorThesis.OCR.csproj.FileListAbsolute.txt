@@ -1,0 +1,16 @@
+D:\Repositories\BachelorThesis.OCR\bin\Debug\net5.0\BachelorThesis.OCR.exe
+D:\Repositories\BachelorThesis.OCR\bin\Debug\net5.0\BachelorThesis.OCR.deps.json
+D:\Repositories\BachelorThesis.OCR\bin\Debug\net5.0\BachelorThesis.OCR.runtimeconfig.json
+D:\Repositories\BachelorThesis.OCR\bin\Debug\net5.0\BachelorThesis.OCR.runtimeconfig.dev.json
+D:\Repositories\BachelorThesis.OCR\bin\Debug\net5.0\BachelorThesis.OCR.dll
+D:\Repositories\BachelorThesis.OCR\bin\Debug\net5.0\ref\BachelorThesis.OCR.dll
+D:\Repositories\BachelorThesis.OCR\bin\Debug\net5.0\BachelorThesis.OCR.pdb
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\BachelorThesis.OCR.csproj.AssemblyReference.cache
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\BachelorThesis.OCR.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\BachelorThesis.OCR.AssemblyInfoInputs.cache
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\BachelorThesis.OCR.AssemblyInfo.cs
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\BachelorThesis.OCR.csproj.CoreCompileInputs.cache
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\BachelorThesis.OCR.dll
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\ref\BachelorThesis.OCR.dll
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\BachelorThesis.OCR.pdb
+D:\Repositories\BachelorThesis.OCR\obj\Debug\net5.0\BachelorThesis.OCR.genruntimeconfig.cache
