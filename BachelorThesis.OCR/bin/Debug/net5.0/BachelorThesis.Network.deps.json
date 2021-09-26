@@ -1,17 +1,19 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v5.0",
+    "name": ".NETCoreApp,Version=v3.1",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v5.0": {
-      "BachelorThesis.OCR/1.0.0": {
+    ".NETCoreApp,Version=v3.1": {
+      "BachelorThesis.Network/1.0.0": {
         "dependencies": {
-          "BachelorThesis.Network": "1.0.0"
+          "Json.Net": "1.0.25",
+          "Newtonsoft.Json": "13.0.1",
+          "System.Drawing.Common": "5.0.2"
         },
         "runtime": {
-          "BachelorThesis.OCR.dll": {}
+          "BachelorThesis.Network.dll": {}
         }
       },
       "Json.Net/1.0.25": {
@@ -74,21 +76,11 @@
             "fileVersion": "5.0.421.11614"
           }
         }
-      },
-      "BachelorThesis.Network/1.0.0": {
-        "dependencies": {
-          "Json.Net": "1.0.25",
-          "Newtonsoft.Json": "13.0.1",
-          "System.Drawing.Common": "5.0.2"
-        },
-        "runtime": {
-          "BachelorThesis.Network.dll": {}
-        }
       }
     }
   },
   "libraries": {
-    "BachelorThesis.OCR/1.0.0": {
+    "BachelorThesis.Network/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -127,11 +119,6 @@
       "sha512": "sha512-rvr/M1WPf24ljpvvrVd74+NdjRUJu1bBkspkZcnzSZnmAUQWSvanlQ0k/hVHk+cHufZbZfu7vOh/vYc0q5Uu/A==",
       "path": "system.drawing.common/5.0.2",
       "hashPath": "system.drawing.common.5.0.2.nupkg.sha512"
-    },
-    "BachelorThesis.Network/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }
