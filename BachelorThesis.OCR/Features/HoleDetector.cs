@@ -2,22 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BachelorThesis.OCR
+namespace BachelorThesis.OCR.Features
 {
-    public class HoleDetector
+    public class HoleDetector : IFeature
     {
-        private readonly Dictionary<int, Prediction> Predictions = new()
+        private readonly Dictionary<int, Prediction> _predictions = new()
         {
             { 0, Prediction.RecalculatedPrediction(new [] { false, true, true, true, false, true, false, true, false, false })},
             { 1, Prediction.RecalculatedPrediction(new [] { true, false, false, false, true, false, true, false, false, true })},
             { 2, Prediction.RecalculatedPrediction(new [] { false, false, false, false, false, false, false, false, true, false })}
         };
 
-        private int[][] GroupFlag;
+        private int[][] _groupFlag;
 
         public Image Image;
 
-        public Prediction GetPredictionFromImage(Image image)
+        public Prediction CalculatePrediction(Image image)
         {
             Image = image;
 
@@ -31,7 +31,7 @@ namespace BachelorThesis.OCR
 
                 for (int pixelIndex = 0; pixelIndex < image.Width; pixelIndex++)
                 {
-                    var pixelGroup = GroupFlag[rowIndex][pixelIndex];
+                    var pixelGroup = _groupFlag[rowIndex][pixelIndex];
 
                     if (pixelGroup == -1 && Image.IsPixelWhite(row[pixelIndex]))
                     {
@@ -42,20 +42,7 @@ namespace BachelorThesis.OCR
                 }
             }
 
-            Console.WriteLine("--------------------------------------------");
-            foreach (int[] row in GroupFlag)
-            {
-                Console.WriteLine();
-                foreach (int i in row)
-                {
-                    if (i == -1) Console.Write("X ");
-                    else Console.Write($"{i} ");
-                }
-            }
-            Console.WriteLine();
-            Console.WriteLine("--------------------------------------------");
-
-            var smallHoles = GroupFlag.SelectMany(e => e).Where(e => e != -1).GroupBy(e => e).Select(e => e.Count() < 5).Count(e => e);
+            var smallHoles = _groupFlag.SelectMany(e => e).Where(e => e != -1).GroupBy(e => e).Select(e => e.Count() < 5).Count(e => e);
 
             var numberOfHoles = groupCounter - smallHoles - 1; //One hole is the background
 
@@ -64,7 +51,7 @@ namespace BachelorThesis.OCR
                 return Prediction.EmptyPrediction;
             }
 
-            return Predictions[numberOfHoles];
+            return _predictions[numberOfHoles];
         }
 
         private void MarkAndTraverse(int groupCounter, int rowIndex, int pixelIndex)
@@ -72,9 +59,9 @@ namespace BachelorThesis.OCR
             if (rowIndex >= Image.Height || pixelIndex >= Image.Width) return;
             if (rowIndex < 0 || pixelIndex < 0) return;
             if (!Image.IsPixelWhite(Image.PixelData[rowIndex][pixelIndex])) return;
-            if (GroupFlag[rowIndex][pixelIndex] != -1) return;
+            if (_groupFlag[rowIndex][pixelIndex] != -1) return;
 
-            GroupFlag[rowIndex][pixelIndex] = groupCounter;
+            _groupFlag[rowIndex][pixelIndex] = groupCounter;
             MarkAndTraverse(groupCounter, rowIndex+1, pixelIndex);
             MarkAndTraverse(groupCounter, rowIndex-1, pixelIndex);
             MarkAndTraverse(groupCounter, rowIndex, pixelIndex+1);
@@ -87,12 +74,12 @@ namespace BachelorThesis.OCR
         
         private void FillGroupFlag(Image image)
         {
-            GroupFlag = new int[image.PixelData.Length][];
+            _groupFlag = new int[image.PixelData.Length][];
 
             for (int rowIndex = 0; rowIndex < image.PixelData.Length; rowIndex++)
             {
-                GroupFlag[rowIndex] = new int[image.PixelData[rowIndex].Length];
-                Array.Fill(GroupFlag[rowIndex], -1);
+                _groupFlag[rowIndex] = new int[image.PixelData[rowIndex].Length];
+                Array.Fill(_groupFlag[rowIndex], -1);
             }
         }
 
@@ -100,22 +87,22 @@ namespace BachelorThesis.OCR
         {
             if (row != 0 && Image.IsPixelWhite(image.PixelData[row - 1][pixel]))
             {
-                return GroupFlag[row - 1][pixel];
+                return _groupFlag[row - 1][pixel];
             }
 
             if (pixel != 0 && Image.IsPixelWhite(image.PixelData[row][pixel - 1]))
             {
-                return GroupFlag[row][pixel - 1];
+                return _groupFlag[row][pixel - 1];
             }
 
             if (row != (image.PixelData.Length - 1) && Image.IsPixelWhite(image.PixelData[row + 1][pixel]))
             {
-                return GroupFlag[row + 1][pixel];
+                return _groupFlag[row + 1][pixel];
             }
 
             if (pixel != (image.PixelData[row].Length - 1) && Image.IsPixelWhite(image.PixelData[row][pixel + 1]))
             {
-                return GroupFlag[row][pixel + 1];
+                return _groupFlag[row][pixel + 1];
             }
 
             return -1;

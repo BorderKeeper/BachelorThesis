@@ -1,14 +1,15 @@
-﻿using System.Linq;
-
-namespace BachelorThesis.OCR
+﻿namespace BachelorThesis.OCR
 {
     public class Image
     {
+        public Prediction CorrectResult { get; set; }
+
         public double[][] PixelData { get; set; }
 
-        public Image(double[][] pixelData)
+        public Image(double[][] pixelData, Prediction correctResult)
         {
             PixelData = pixelData;
+            CorrectResult = correctResult;
         }
 
         public static bool IsPixelWhite(double color)

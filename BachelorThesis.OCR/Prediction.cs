@@ -7,6 +7,11 @@ namespace BachelorThesis.OCR
     {
         public double[] PredictionVector { get; set; }
 
+        public Prediction(double[] predictionVector)
+        {
+            PredictionVector = predictionVector;
+        }
+
         public Prediction()
         {
             PredictionVector = new double[10];
@@ -35,9 +40,14 @@ namespace BachelorThesis.OCR
 
         public static Prediction EmptyPrediction => new();
 
+        public double GetNumber()
+        {
+            return Array.IndexOf(PredictionVector, PredictionVector.Max());
+        }
+
         public override string ToString()
         {
-            return String.Join(" ", PredictionVector);
+            return string.Join(" ", PredictionVector.Select(v => $"{v:F}"));
         }
     }
 }

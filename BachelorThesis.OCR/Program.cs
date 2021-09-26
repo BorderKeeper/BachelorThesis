@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BachelorThesis.Network;
+using BachelorThesis.OCR.Features;
 
 namespace BachelorThesis.OCR
 {
@@ -23,11 +24,27 @@ namespace BachelorThesis.OCR
             ConvertedData = data.Select(image => new KeyValuePair<double[], double[][]>(image.Key, ConvertImageStreamToMatrix(image.Value, 28)))
                 .ToDictionary(i => i.Key, i => i.Value);
 
-            var holeDetector = new HoleDetector();
+            var images = ConvertedData.Select(e => new Image(e.Value, new Prediction(e.Key)));
 
-            foreach (var imageWithResult in ConvertedData)
+            var features = FeatureFactory.GetFeatures();
+
+            foreach (Image image in images)
             {
-                Console.WriteLine(holeDetector.GetPredictionFromImage(new Image(imageWithResult.Value)));
+                Prediction outputPrediction = new Prediction();
+
+                var featureVectors = new List<Prediction>();
+
+                foreach (IFeature feature in features)
+                {
+                    featureVectors.Add(feature.CalculatePrediction(image));
+                }
+
+                for (int i = 0; i < 9; i++)
+                {
+                    outputPrediction.PredictionVector[i] = featureVectors.Select(p => p.PredictionVector).Average(v => v[i]);
+                }
+
+                Console.WriteLine($"[{outputPrediction}] Predicted: {outputPrediction.GetNumber()}, Actual: {image.CorrectResult.GetNumber()}"); 
             }
         }
 
