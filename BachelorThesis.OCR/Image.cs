@@ -6,10 +6,13 @@
 
         public double[][] PixelData { get; set; }
 
-        public Image(double[][] pixelData, Prediction correctResult)
+        public string Filename { get; set; }
+
+        public Image(double[][] pixelData, Prediction correctResult, string filename)
         {
             PixelData = pixelData;
             CorrectResult = correctResult;
+            Filename = filename;
         }
 
         public static bool IsPixelWhite(double color)

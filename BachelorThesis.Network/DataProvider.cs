@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using BachelorThesis.Network.Entities;
+using MySql.Data.MySqlClient;
 
 namespace BachelorThesis.Network
 {
@@ -45,11 +47,13 @@ namespace BachelorThesis.Network
             return data;
         }
 
-        public static Dictionary<double[], double[]> LoadTestPictures()
+        public static IEnumerable<DataRow> LoadTestPictures()
         {
+            //var dal = new SqlDataProvider();
+
             var numberFolders = new DirectoryInfo(Path.Combine(MniskPath, "trainingSample", "trainingSample"));
 
-            var data = new Dictionary<double[], double[]>();
+            var data = new List<DataRow>();
             foreach (var numberDirectory in numberFolders.EnumerateDirectories())
             {
                 var character = int.Parse(numberDirectory.Name);
@@ -59,6 +63,8 @@ namespace BachelorThesis.Network
                     Bitmap img = new Bitmap(numberFile.FullName);
 
                     var imageList = new double[img.Width * img.Height];
+
+                    //dal.Update($"INSERT INTO images (filename, digit) VALUES (\"{numberFile.Name}\", {character})");
 
                     for (int y = 0; y < img.Width; y++)
                     {
@@ -81,7 +87,7 @@ namespace BachelorThesis.Network
                     var nullExpectedResult = new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
                     nullExpectedResult[character] = 1;
 
-                    data.Add(nullExpectedResult, imageList);
+                    data.Add(new DataRow { Character = character, ImageName = numberFile.Name, Output = nullExpectedResult, Input = imageList });
                 }
             }
 

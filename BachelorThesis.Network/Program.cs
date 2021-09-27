@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BachelorThesis.Network.Entities;
 using BachelorThesis.Network.Options;
 
 namespace BachelorThesis.Network
@@ -9,20 +10,24 @@ namespace BachelorThesis.Network
     {
         private const string SavePath = "D:\\BachelorThesis\\networks";
 
+        private static SqlDataProvider _dal;
+
         static void Main(string[] args)
         {
             //TestSimpleXor();
 
-            TrainOnPictures();
+            //TrainOnPictures();
 
-            //TestNetwork();
+            _dal = new SqlDataProvider();
+
+            TestNetwork();
 
             Console.ReadKey();
         }
 
         private static void TestNetwork()
         {
-            var data = DataProvider.LoadTrainingPictures();
+            var data = DataProvider.LoadTestPictures();
 
             var network = NeuralNetwork.Load(SavePath);
 
@@ -59,12 +64,28 @@ namespace BachelorThesis.Network
             network.Save(SavePath);
         }
 
-        private static void DisplayData(Dictionary<double[], double[]> data, NeuralNetwork network)
+        private static void DisplayData(IEnumerable<DataRow> data, NeuralNetwork network)
         {
+            int run = 0;
+
+            for (int n = 0; n < network.Neurons[^2].Length; n++)
+            {
+                var neuron = network.Neurons[^2][n];
+
+                _dal.Update($"INSERT INTO last_hidden_layer (run, `index`, bias) VALUES ({run}, {n}, {neuron.Bias})");
+
+                for (int ln = 0; ln < network.Neurons.Last().Length; ln++)
+                {
+                    var weight = network.Weights[^2][n,ln];
+
+                    _dal.Update($"INSERT INTO last_hidden_weights (run, `index`, output_layer, weight) values ({run}, {n}, {ln}, {weight})");
+                }
+            }
+
             int trainingDataIndex = 0;
             foreach (var row in data)
             {
-                var output = network.Predict(row.Value);
+                var output = network.Predict(row.Input);
 
                 var outputWithPercentage = new Dictionary<int, double>();
                 for(int i = 0; i < output.Length; i++)
@@ -74,7 +95,16 @@ namespace BachelorThesis.Network
 
                 var top3 = outputWithPercentage.OrderByDescending(e => e.Value).Take(3);
 
-                Console.WriteLine($"actual:{string.Join(", ", top3.Select(x => $"|{x.Key}|: {x.Value:P}"))}, expected: {string.Join(",", row.Key)}");
+                _dal.Update($"INSERT INTO network (run, filename, guessed, accuracy, actual) VALUES ({run}, \"{row.ImageName}\", {top3.First().Key}, {top3.First().Value}, {row.Character})");
+
+                for (int n = 0; n < network.Neurons[^2].Length; n++)
+                {
+                    var neuron = network.Neurons[^2][n];
+
+                    _dal.Update($"INSERT INTO last_hidden_layer_values (run, `index`, filename, bias, output) VALUE ({run}, {n}, \"{row.ImageName}\", {neuron.Bias}, {neuron.Output})");
+                }
+
+                Console.WriteLine($"actual:{string.Join(", ", top3.Select(x => $"|{x.Key}|: {x.Value:P}"))}, expected: {row.Character}");
                 trainingDataIndex++;
             }
         }

@@ -17,14 +17,17 @@ namespace BachelorThesis.OCR
 
         private static Dictionary<double[], double[][]> ConvertedData { get; set; }
 
+        private static SqlDataProvider _dal;
+
         static void Main(string[] args)
         {
+            int run = 0;
+
+            _dal = new SqlDataProvider();
+
             var data = DataProvider.LoadTestPictures();
 
-            ConvertedData = data.Select(image => new KeyValuePair<double[], double[][]>(image.Key, ConvertImageStreamToMatrix(image.Value, 28)))
-                .ToDictionary(i => i.Key, i => i.Value);
-
-            var images = ConvertedData.Select(e => new Image(e.Value, new Prediction(e.Key)));
+            var images = data.Select(e => new Image(ConvertImageStreamToMatrix(e.Input, 28), new Prediction(e.Output), e.ImageName));
 
             var features = FeatureFactory.GetFeatures();
 
@@ -36,7 +39,16 @@ namespace BachelorThesis.OCR
 
                 foreach (IFeature feature in features)
                 {
-                    featureVectors.Add(feature.CalculatePrediction(image));
+                    var prediction = feature.CalculatePrediction(image);
+
+                    _dal.Update($"INSERT INTO ocr_features (run, filename, feature, actual) VALUES ({run}, \"{image.Filename}\", \"{feature.GetType().Name}\", {image.CorrectResult.GetNumber()})");
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        _dal.Update($"INSERT INTO ocr_results (run, filename, feature, number, accuracy) VALUES ({run}, \"{image.Filename}\", \"{feature.GetType().Name}\", {i}, {prediction.PredictionVector[i]})");
+                    }
+
+                    featureVectors.Add(prediction);
                 }
 
                 for (int i = 0; i < 9; i++)
