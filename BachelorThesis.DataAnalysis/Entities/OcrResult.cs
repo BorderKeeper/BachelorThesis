@@ -25,5 +25,10 @@ namespace BachelorThesis.DataAnalysis.Entities
             Number = data.GetInt32(4);
             Accuracy = data.GetDouble(5);
         }
+
+        public override string ToString()
+        {
+            return $"{Accuracy:E2}";
+        }
     }
 }
