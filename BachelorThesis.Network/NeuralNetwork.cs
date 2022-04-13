@@ -74,9 +74,14 @@ namespace BachelorThesis.Network
 
             while (iterations > 0)
             {
+                int rightGuesses = 0;
+
                 for (int trainingIndex = 0; trainingIndex < trainingDataPerIteration; trainingIndex++)
                 {
-                    _ = Predict(trainingData[trainingIndex]);
+                    var prediction = new Prediction(Predict(trainingData[trainingIndex]));
+                    var desired = new Prediction(desiredOutput[trainingIndex]);
+
+                    if (prediction.GetNumber() == desired.GetNumber()) rightGuesses++;
 
                     CalculateOutputErrorsFromCost(desiredOutput, trainingIndex);
 
@@ -87,26 +92,26 @@ namespace BachelorThesis.Network
                     ReadjustWeights();
                 }
 
-                CallOnIterationCompleted(iterations);
+                CallOnIterationCompleted(iterations, rightGuesses);
 
                 iterations--;
             }
         }
 
-        public void Save(string path)
+        public void Save(string path, string name)
         {
-            File.WriteAllText(Path.Combine(path, "neurons.json"), JsonConvert.SerializeObject(Neurons));
-            File.WriteAllText(Path.Combine(path, "weights.json"), JsonConvert.SerializeObject(Weights));
-            File.WriteAllText(Path.Combine(path, "options.json"), JsonConvert.SerializeObject(_options));
+            File.WriteAllText(Path.Combine(path, $"neurons-{name}.json"), JsonConvert.SerializeObject(Neurons));
+            File.WriteAllText(Path.Combine(path, $"weights-{name}.json"), JsonConvert.SerializeObject(Weights));
+            File.WriteAllText(Path.Combine(path, $"options-{name}.json"), JsonConvert.SerializeObject(_options));
         }
 
-        public static NeuralNetwork Load(string path)
+        public static NeuralNetwork Load(string path, string name)
         {
             var neuralNetwork = new NeuralNetwork
             {
-                Neurons = JsonConvert.DeserializeObject<Neuron[][]>(File.ReadAllText(Path.Combine(path, "neurons.json"))),
-                Weights = JsonConvert.DeserializeObject<double[][,]>(File.ReadAllText(Path.Combine(path, "weights.json"))),
-                _options = JsonConvert.DeserializeObject<NeuralNetworkOptions>(File.ReadAllText(Path.Combine(path, "options.json")))
+                Neurons = JsonConvert.DeserializeObject<Neuron[][]>(File.ReadAllText(Path.Combine(path, $"neurons-{name}.json"))),
+                Weights = JsonConvert.DeserializeObject<double[][,]>(File.ReadAllText(Path.Combine(path, $"weights-{name}.json"))),
+                _options = JsonConvert.DeserializeObject<NeuralNetworkOptions>(File.ReadAllText(Path.Combine(path, $"options-{name}.json")))
             };
 
             return neuralNetwork;
@@ -260,12 +265,13 @@ namespace BachelorThesis.Network
             return _random.NextDouble() * 2 * nonRandomizedWeight - nonRandomizedWeight;
         }
 
-        private void CallOnIterationCompleted(int iterations)
+        private void CallOnIterationCompleted(int iterations, int rightGuesses)
         {
             _options.OnIterationCompleted.Invoke(this, new IterationCompletedArgs
             {
                 Iteration = iterations,
-                AverageError = Costs.Average()
+                AverageError = Costs.Average(),
+                NoOfPredicted = rightGuesses
             });
 
             Costs.Clear();

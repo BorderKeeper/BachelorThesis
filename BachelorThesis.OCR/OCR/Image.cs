@@ -1,4 +1,6 @@
-﻿namespace BachelorThesis.OCR
+﻿using BachelorThesis.Network.Entities;
+
+namespace BachelorThesis.OCR
 {
     public class Image
     {

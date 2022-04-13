@@ -37,7 +37,6 @@ D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\Bachel
 D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\BachelorThesis.Network.UI.runtimeconfig.json
 D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\BachelorThesis.Network.UI.runtimeconfig.dev.json
 D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\BachelorThesis.Network.UI.dll
-D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\ref\BachelorThesis.Network.UI.dll
 D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\BachelorThesis.Network.UI.pdb
 D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\Json.Net.dll
 D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\Newtonsoft.Json.dll
@@ -58,3 +57,12 @@ D:\Repositories\BachelorThesis\BachelorThesis.UI\obj\Debug\net5.0-windows\Bachel
 D:\Repositories\BachelorThesis\BachelorThesis.UI\obj\Debug\net5.0-windows\ref\BachelorThesis.Network.UI.dll
 D:\Repositories\BachelorThesis\BachelorThesis.UI\obj\Debug\net5.0-windows\BachelorThesis.Network.UI.pdb
 D:\Repositories\BachelorThesis\BachelorThesis.UI\obj\Debug\net5.0-windows\BachelorThesis.Network.UI.genruntimeconfig.cache
+D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\BouncyCastle.Crypto.dll
+D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\Google.Protobuf.dll
+D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\K4os.Compression.LZ4.dll
+D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\K4os.Compression.LZ4.Streams.dll
+D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\K4os.Hash.xxHash.dll
+D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\MySql.Data.dll
+D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\Ubiety.Dns.Core.dll
+D:\Repositories\BachelorThesis\BachelorThesis.UI\bin\Debug\net5.0-windows\Zstandard.Net.dll
+D:\Repositories\BachelorThesis\BachelorThesis.UI\obj\Debug\net5.0-windows\refint\BachelorThesis.Network.UI.dll

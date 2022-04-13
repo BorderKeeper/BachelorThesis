@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BachelorThesis.Network.Entities;
 
 namespace BachelorThesis.OCR.Features
 {
@@ -30,7 +31,12 @@ namespace BachelorThesis.OCR.Features
 
         public Prediction CalculatePrediction(Image image)
         {
-            return _predictions[(int)Math.Round(image.CorrectResult.GetNumber())];
+            return _predictions[image.CorrectResult.GetNumber()];
+        }
+
+        public override string ToString()
+        {
+            return nameof(RightAndLeftEntries);
         }
     }
 }

@@ -8,6 +8,8 @@ namespace BachelorThesis.Network.UI
     {
         private const string SavePath = "D:\\BachelorThesis\\networks";
 
+        private const string NetworkName = "UINet";
+
         private Graphics _graphics;
 
         private int LayerOffset = 20;
@@ -24,7 +26,7 @@ namespace BachelorThesis.Network.UI
         {
             Graphics graphics = CreateGraphics();
 
-            NeuralNetwork neuralNetwork = NeuralNetwork.Load(SavePath);
+            NeuralNetwork neuralNetwork = NeuralNetwork.Load(SavePath, NetworkName);
 
             int secondToLastLayer = neuralNetwork.Neurons.GetLength(0) - 2;
             for (int layer = secondToLastLayer; layer < neuralNetwork.Neurons.GetLength(0); layer++)

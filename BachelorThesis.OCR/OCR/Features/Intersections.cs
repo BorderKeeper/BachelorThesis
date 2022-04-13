@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BachelorThesis.Network.Entities;
 
 namespace BachelorThesis.OCR.Features
 {
@@ -24,10 +25,14 @@ namespace BachelorThesis.OCR.Features
             { 8, Prediction.RecalculatedPrediction(new[] { false, false, true, true, true, true, true, false, true, true }) }, //2
             { 9, Prediction.RecalculatedPrediction(new[] { false, false, true, true, true, true, true, false, true, true }) } //2
         };
-
         public Prediction CalculatePrediction(Image image)
         {
-            return _predictions[(int)Math.Round(image.CorrectResult.GetNumber())];
+            return _predictions[image.CorrectResult.GetNumber()];
+        }
+
+        public override string ToString()
+        {
+            return nameof(Intersections);
         }
     }
 }

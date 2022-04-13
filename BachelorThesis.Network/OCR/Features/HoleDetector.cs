@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BachelorThesis.Network.Entities;
 
-namespace BachelorThesis.OCR.Features
+namespace BachelorThesis.Network.OCR.Features
 {
     public class HoleDetector : IFeature
     {
-        private readonly Dictionary<int, Prediction> _predictions = new()
+        private readonly Dictionary<int, Prediction> _predictions = new Dictionary<int, Prediction>
         {
-            { 0, Prediction.RecalculatedPrediction(new [] { false, true, true, true, false, true, false, true, false, false })},
-            { 1, Prediction.RecalculatedPrediction(new [] { true, false, false, false, true, false, true, false, false, true })},
-            { 2, Prediction.RecalculatedPrediction(new [] { false, false, false, false, false, false, false, false, true, false })}
+            { 0, Prediction.RecalculatedPrediction(new [] { false, true, true, true, false, true, false, true, false, false }, 0, 2)},
+            { 1, Prediction.RecalculatedPrediction(new [] { true, false, false, false, true, false, true, false, false, true }, 1, 2)},
+            { 2, Prediction.RecalculatedPrediction(new [] { false, false, false, false, false, false, false, false, true, false }, 2, 2)}
         };
 
         private int[][] _groupFlag;
@@ -106,6 +107,10 @@ namespace BachelorThesis.OCR.Features
             }
 
             return -1;
+        }
+        public override string ToString()
+        {
+            return nameof(HoleDetector);
         }
     }
 }

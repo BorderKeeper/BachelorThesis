@@ -1,17 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BachelorThesis.Network", "BachelorThesis.Network\BachelorThesis.Network.csproj", "{E2C24165-DABF-4FA0-AB10-0A75B9B0F506}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BachelorThesis.Network.UI", "BachelorThesis.UI\BachelorThesis.Network.UI.csproj", "{8A92FBF9-37CF-4C84-A90C-7EFE65AE9183}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BachelorThesis.OCR", "BachelorThesis.OCR\BachelorThesis.OCR.csproj", "{31CC2717-42B5-4649-B0C6-035DB936DE21}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INFOIBV", "HoughTransform\INFOIBV.csproj", "{6125952D-9D1A-4F8F-90C5-879CF59740B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BachelorThesis.DataAnalysis", "BachelorThesis.DataAnalysis\BachelorThesis.DataAnalysis.csproj", "{339AA22E-C4AC-4AFA-81E6-7564A71982FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BachelorThesis.DataAnalysis", "BachelorThesis.DataAnalysis\BachelorThesis.DataAnalysis.csproj", "{339AA22E-C4AC-4AFA-81E6-7564A71982FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +35,6 @@ Global
 		{8A92FBF9-37CF-4C84-A90C-7EFE65AE9183}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8A92FBF9-37CF-4C84-A90C-7EFE65AE9183}.Release|x86.ActiveCfg = Release|Any CPU
 		{8A92FBF9-37CF-4C84-A90C-7EFE65AE9183}.Release|x86.Build.0 = Release|Any CPU
-		{31CC2717-42B5-4649-B0C6-035DB936DE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31CC2717-42B5-4649-B0C6-035DB936DE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31CC2717-42B5-4649-B0C6-035DB936DE21}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{31CC2717-42B5-4649-B0C6-035DB936DE21}.Debug|x86.Build.0 = Debug|Any CPU
-		{31CC2717-42B5-4649-B0C6-035DB936DE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31CC2717-42B5-4649-B0C6-035DB936DE21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31CC2717-42B5-4649-B0C6-035DB936DE21}.Release|x86.ActiveCfg = Release|Any CPU
-		{31CC2717-42B5-4649-B0C6-035DB936DE21}.Release|x86.Build.0 = Release|Any CPU
 		{6125952D-9D1A-4F8F-90C5-879CF59740B7}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{6125952D-9D1A-4F8F-90C5-879CF59740B7}.Debug|x86.ActiveCfg = Debug|x86
 		{6125952D-9D1A-4F8F-90C5-879CF59740B7}.Debug|x86.Build.0 = Debug|x86

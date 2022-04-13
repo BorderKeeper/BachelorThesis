@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BachelorThesis.DataAnalysis.Entities;
 using BachelorThesis.Network;
+using BachelorThesis.Network.Entities.AnalysisEntities;
 
 namespace BachelorThesis.DataAnalysis
 {
@@ -16,7 +16,7 @@ namespace BachelorThesis.DataAnalysis
         private static List<HiddenLayer> _hiddenLayer;
         private static List<HiddenLayerValues> _hiddenLayerValues;
         private static List<HiddenWeights> _weights;
-        private static List<Entities.Network> _networks;
+        private static List<Network.Entities.AnalysisEntities.Network> _networks;
         private static List<OcrFeature> _features;
         private static List<OcrResult> _results;
 
@@ -24,19 +24,25 @@ namespace BachelorThesis.DataAnalysis
         {
             _dal = new SqlDataProvider();
 
-            _hiddenLayer = GetHiddenLayer();
+            /*_hiddenLayer = GetHiddenLayer();
 
             _hiddenLayerValues = GetHiddenLayerValues();
 
             _weights = GetHiddenLayerWeights();
 
-            _networks = GetNetworks();
+            _networks = GetNetworks();*/
 
             _features = GetFeatures();
 
             _results = GetResults();
 
-            foreach (Entities.Network network in _networks.Where(n => n.Run == Run))
+            Accuracy("HoleDetector");
+            Accuracy("HoughTransform");
+            Accuracy("RightAndLeftEntries");
+            Accuracy("CrossInTheCenter");
+            Accuracy("Intersections");
+
+            /*foreach (Entities.Network network in _networks.Where(n => n.Run == Run))
             {
                 var neurons = _hiddenLayer.Where(n => n.Run == network.Run);
 
@@ -48,7 +54,27 @@ namespace BachelorThesis.DataAnalysis
 
                     MatchNeuronToFeatures(neuron, output, neuronWeights, network.Filename);
                 }
+            }*/
+        }
+
+        private static void Accuracy(string feature)
+        {
+            var numberOfWrongGuesses = 0;
+            int guesses = 0;
+
+            foreach (OcrFeature ocrFeature in _features.Where(f => f.Filename == "img_434.jpg"))
+            {
+                var actual = ocrFeature.Actual;
+
+                var vector = _results.Where(r => r.Run == Run && r.Filename == ocrFeature.Filename && r.Feature == feature && r.Filename == "img_434.jpg");
+                var guessedDigit = vector.First(d => d.Accuracy == vector.Max(d => d.Accuracy));
+
+                if (actual != guessedDigit.Number) numberOfWrongGuesses++;
+                guesses++;
             }
+
+            var accuracy = (double) numberOfWrongGuesses / (double) guesses;
+            Console.WriteLine($"{feature} guessed {numberOfWrongGuesses} times wrong out of {guesses}, which is an accuracy of {accuracy:P}");
         }
 
         private static void MatchNeuronToFeatures(HiddenLayer neuron, HiddenLayerValues output, IEnumerable<HiddenWeights> neuronWeights, string fileName)
@@ -131,15 +157,15 @@ namespace BachelorThesis.DataAnalysis
             return hiddenLayerValues;
         }
 
-        private static List<Entities.Network> GetNetworks()
+        private static List<Network.Entities.AnalysisEntities.Network> GetNetworks()
         {
-            var hiddenLayerValues = new List<Entities.Network>();
+            var hiddenLayerValues = new List<Network.Entities.AnalysisEntities.Network>();
 
             using var reader = _dal.Read("SELECT * FROM network");
 
             while (reader.Read())
             {
-                hiddenLayerValues.Add(new Entities.Network(reader));
+                hiddenLayerValues.Add(new Network.Entities.AnalysisEntities.Network(reader));
             }
 
             return hiddenLayerValues;
@@ -153,7 +179,7 @@ namespace BachelorThesis.DataAnalysis
 
             while (reader.Read())
             {
-                hiddenLayerValues.Add(new OcrFeature(reader));
+                //hiddenLayerValues.Add(new OcrFeature(reader));
             }
 
             return hiddenLayerValues;

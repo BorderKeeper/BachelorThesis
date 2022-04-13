@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace BachelorThesis.DataAnalysis.Entities
+namespace BachelorThesis.Network.Entities.AnalysisEntities
 {
     public class OcrResult
     {

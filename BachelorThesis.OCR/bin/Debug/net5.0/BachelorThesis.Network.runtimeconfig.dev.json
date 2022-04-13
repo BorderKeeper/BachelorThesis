@@ -2,7 +2,8 @@
   "runtimeOptions": {
     "additionalProbingPaths": [
       "C:\\Users\\ledrj\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\ledrj\\.nuget\\packages"
+      "C:\\Users\\ledrj\\.nuget\\packages",
+      "D:\\ProgramsMicrosoft\\VisualStudio\\Shared\\NuGetPackages"
     ]
   }
 }
